@@ -1472,7 +1472,8 @@ addEventListener('DOMContentLoaded', () => {
             throw new Error(text);
         })
         .then((res) => {
-            if (!navigator.clipboard?.writeText(res.shortUrl).then(next).catch(err => console.log('Could not copy to clipboard: ' + err.message))) {
+            const shortUrl = new URL(`/r/${res.id}`, window.location.origin).href;
+            if (!navigator.clipboard?.writeText(shortUrl).then(next).catch(err => console.log('Could not copy to clipboard: ' + err.message))) {
                 const textarea = document.body.appendChild(document.createElement('textarea'));
 
                 textarea.value = res.url;

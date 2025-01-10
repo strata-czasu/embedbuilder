@@ -65,7 +65,7 @@ const api = new Elysia()
 		if (!ALLOWED_USERS.includes(discordUser.id)) return error(403, "Forbidden");
 		const id = crypto.randomUUID();
 		saveRedirect(id, body);
-		return { shortUrl: `http://localhost:3000/r/${id}` };
+		return { id };
 	})
 	.get("/api/redirect/:id", async ({ params, error }) => {
 		const data = getRedirect(params.id);
