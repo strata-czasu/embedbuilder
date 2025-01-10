@@ -583,6 +583,7 @@ addEventListener('DOMContentLoaded', () => {
             if (child.classList?.[1] === 'content')
                 gui.insertBefore(gui.appendChild(child.cloneNode(true)), gui.appendChild(child.nextElementSibling.cloneNode(true))).nextElementSibling.firstElementChild.value = object.content || '';
             else if (child.classList?.[1] === 'guiEmbedName') {
+                console.log(object)
                 for (const [i, embed] of (object.embeds.length ? object.embeds : [{}]).entries()) {
                     const guiEmbedName = gui.appendChild(child.cloneNode(true))
 
@@ -1447,6 +1448,45 @@ addEventListener('DOMContentLoaded', () => {
             next();
         }
     });
+
+    document.querySelector('.top-btn.save').addEventListener('click', () => {
+        // send POST /api/save with JSON.stringify(json, null, 4) as the body 
+        const mark = document.querySelector('.top-btn.save .mark');
+        const next = () => {
+            mark?.classList.remove('hidden');
+            mark?.previousElementSibling?.classList.add('hidden');
+
+            setTimeout(() => {
+                mark?.classList.add('hidden');
+                mark?.previousElementSibling?.classList.remove('hidden');
+            }
+            , 1500);
+        }
+
+        fetch('/api/save', { method: 'POST', body: JSON.stringify(json, null, 4) })
+        .then(async res => {
+            if (res.ok) return res.json();
+
+            const text = await res.text();
+            window.alert(text);
+            throw new Error(text);
+        })
+        .then((res) => {
+            if (!navigator.clipboard?.writeText(res.shortUrl).then(next).catch(err => console.log('Could not copy to clipboard: ' + err.message))) {
+                const textarea = document.body.appendChild(document.createElement('textarea'));
+
+                textarea.value = res.url;
+                textarea.select();
+                textarea.setSelectionRange(0, 50000);
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                next();
+            }
+        });
+
+    
+    });
+
 });
 
 // Don't assign to 'jsonObject', assign to 'json' instead.

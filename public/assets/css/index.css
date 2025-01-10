@@ -2100,6 +2100,36 @@ body {
     transition: all .3s ease;
 }
 
+.top-btn.save {
+    left: 240px;
+}
+
+.top-btn.save>svg {
+    width: 15px;
+    left: 1px;
+    top: -.5px;
+}
+
+.top-btn.save>svg * {
+    fill: var(#fff);
+    transition: all .3s ease;
+}
+
+.top-btn.save>svg.mark {
+    width: 18px;
+    left: -1px;
+}
+
+.top-btn.save>svg * {
+    fill: var(#fff);
+    transition: all .3s ease;
+}
+
+.top-btn.save>svg * {
+    fill: var(#fff);
+    transition: all .3s ease;
+}
+
 .top-btn>svg {
     width: 20px;
     height: 100%;
