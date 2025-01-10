@@ -1,6 +1,6 @@
 import { Database } from "bun:sqlite";
 
-const db = new Database("db.sqlite", { strict: true });
+const db = new Database("data/db.sqlite", { strict: true });
 
 
 const DATABASE_VERSION = 1;
